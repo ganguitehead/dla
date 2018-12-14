@@ -71,6 +71,20 @@ class Student extends CI_Model
         }
         return false;
     }
+
+    /* Check if the student is enrolled to the course ID */
+    public function checkIfCourseEnrolled($studentId, $courseId)
+    {
+        $this->db->select("id");
+        $query = $this->db->get_where('course_enrolled', array('student_id' => $studentId, 'course_id' => $courseId));
+
+        if ($query->num_rows() > 0) {
+            /* Student has already enrolled for the Course */
+            return true;
+        }
+        return false;
+    }
+
 }
 
 ?>

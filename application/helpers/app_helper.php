@@ -52,14 +52,7 @@ function getLoggedInUserDetail()
 
 function checkUserTypeAndGoHome()
 {
-    switch (getLoggedInUserType()) {
-        case 1:
-            redirect(base_url() . 'home/');
-            break;
-        case 0:
-            redirect(base_url() . 'phome/');
-            break;
-    }
+    redirect(base_url() . 'home/');
 }
 
 ?>

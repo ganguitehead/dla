@@ -12,9 +12,9 @@
     <div class="form-container">
         <div class="image-holder"></div>
         <form method="post" class="student_signup_form">
-            <div class="form-group"><input class="form-control" type="firstname" name="firstname"
+            <div class="form-group"><input class="form-control" type="text" name="firstname"
                                            placeholder="Firstname"></div>
-            <div class="form-group"><input class="form-control" type="lastname" name="lastname" placeholder="Lastname">
+            <div class="form-group"><input class="form-control" type="text" name="lastname" placeholder="Lastname">
             </div>
             <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email"></div>
             <div class="form-group"><input class="form-control" type="password" id="password_one" name="password" placeholder="Password">

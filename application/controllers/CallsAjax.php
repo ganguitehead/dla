@@ -159,7 +159,8 @@ class CallsAjax extends CI_Controller
 
                     $this->session->set_userdata($loginSessionData);
 
-                    $redirect = $userType == 1 ? base_url('home/') : base_url('phome/');
+//                    $redirect = $userType == 1 ? base_url('home/') : base_url('phome/');
+                    $redirect = base_url('home/');
 
                     $output = json_encode(array(
                         'result' => true,

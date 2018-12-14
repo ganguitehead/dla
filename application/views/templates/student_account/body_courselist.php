@@ -1,8 +1,6 @@
 <div class="courses-wrapper p-1 shadow-sm mb-2 bg-white rounded">
     <div class="container">
-        <div class="jumbotron">
-            <h1>Courses</h1>
-        </div>
+        <h1>Courses</h1>
     </div>
 
     <div class="container shadow p-3 mb-5 bg-white rounded">
@@ -11,31 +9,26 @@
             <input class="form-control" id="myInput" type="text" placeholder="Search Courses">
         </div>
 
-        <div class="card-group" style="margin: 10px;">
-            <div class="card"><img class="card-img-top w-100 d-block">
-                <div class="card-body">
-                    <h4 class="card-title">Course 1</h4>
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus
-                        ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                    <button class="btn btn-primary" type="button">Enroll</button>
+
+        <div class="row">
+
+            <?php foreach ($courses as $index => $course) { ?>
+
+                <div class="col-md-4 <?php echo $index > 2 ? 'mt-2' : ''; ?> ">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><u> <?php echo ucfirst($course["name"]); ?> </u></h5>
+
+                            <p class="card-text"> <?php echo ucfirst($course["description"]); ?> </p>
+
+                            <a href="<?php echo base_url('courses/enroll/cid/') . base64_encode($course["id"]); ?>"
+                               class="card-link btn btn-primary">Enroll</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="card"><img class="card-img-top w-100 d-block">
-                <div class="card-body">
-                    <h4 class="card-title">Course 2</h4>
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus
-                        ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                    <button class="btn btn-primary" type="button">Enroll</button>
-                </div>
-            </div>
-            <div class="card"><img class="card-img-top w-100 d-block">
-                <div class="card-body">
-                    <h4 class="card-title">Course 3</h4>
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus
-                        ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                    <button class="btn btn-primary" type="button">Enroll</button>
-                </div>
-            </div>
+
+            <?php } ?>
+
         </div>
     </div>
 </div>

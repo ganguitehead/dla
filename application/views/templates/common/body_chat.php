@@ -1,368 +1,446 @@
-<div class="container-fluid">
-    <div class="messaging">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="headind_srch">
-                    <div class="recent_heading">
-                        <h4>Recent</h4>
-                    </div>
-                    <div class="srch_bar">
-                        <div class="stylish-input-group">
-                            <input type="text" class="search-bar" placeholder="Search">
-                            <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                </span></div>
+<link rel="stylesheet" type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        background: #7F7FD5;
+        background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+        background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+    }
+
+    .chat {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .card {
+        height: 500px;
+        border-radius: 15px !important;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .contacts_body {
+        padding: 0.75rem 0 !important;
+        overflow-y: auto;
+        white-space: nowrap;
+    }
+
+    .msg_card_body {
+        overflow-y: auto;
+    }
+
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+        border-bottom: 0 !important;
+    }
+
+    .card-footer {
+        border-radius: 0 0 15px 15px !important;
+        border-top: 0 !important;
+    }
+
+    .container {
+        align-content: center;
+    }
+
+    .search {
+        border-radius: 15px 0 0 15px !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        border: 0 !important;
+        color: white !important;
+    }
+
+    .search:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+    .type_msg {
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        border: 0 !important;
+        color: white !important;
+        height: 60px !important;
+        overflow-y: auto;
+    }
+
+    .type_msg:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+    .attach_btn {
+        border-radius: 15px 0 0 15px !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        border: 0 !important;
+        color: white !important;
+        cursor: pointer;
+    }
+
+    .send_btn {
+        border-radius: 0 15px 15px 0 !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        border: 0 !important;
+        color: white !important;
+        cursor: pointer;
+    }
+
+    .search_btn {
+        border-radius: 0 15px 15px 0 !important;
+        background-color: rgba(0, 0, 0, 0.3) !important;
+        border: 0 !important;
+        color: white !important;
+        cursor: pointer;
+    }
+
+    .contacts {
+        list-style: none;
+        padding: 0;
+    }
+
+    .contacts li {
+        width: 100% !important;
+        padding: 5px 10px;
+        margin-bottom: 15px !important;
+    }
+
+    .active {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .user_img {
+        height: 70px;
+        width: 70px;
+        border: 1.5px solid #f5f6fa;
+
+    }
+
+    .user_img_msg {
+        height: 40px;
+        width: 40px;
+        border: 1.5px solid #f5f6fa;
+
+    }
+
+    .img_cont {
+        position: relative;
+        height: 70px;
+        width: 70px;
+    }
+
+    .img_cont_msg {
+        height: 40px;
+        width: 40px;
+    }
+
+    .online_icon {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background-color: #4cd137;
+        border-radius: 50%;
+        bottom: 0.2em;
+        right: 0.4em;
+        border: 1.5px solid white;
+    }
+
+    .offline {
+        background-color: #c23616 !important;
+    }
+
+    .user_info {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 15px;
+    }
+
+    .user_info span {
+        font-size: 20px;
+        color: white;
+    }
+
+    .user_info p {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .video_cam {
+        margin-left: 50px;
+        margin-top: 5px;
+    }
+
+    .video_cam span {
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        margin-right: 20px;
+    }
+
+    .msg_cotainer {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-left: 10px;
+        border-radius: 25px;
+        background-color: #82ccdd;
+        padding: 10px;
+        position: relative;
+    }
+
+    .msg_cotainer_send {
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-right: 10px;
+        border-radius: 25px;
+        background-color: #78e08f;
+        padding: 10px;
+        position: relative;
+    }
+
+    .msg_time {
+        position: absolute;
+        left: 0;
+        bottom: -15px;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 10px;
+    }
+
+    .msg_time_send {
+        position: absolute;
+        right: 0;
+        bottom: -15px;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 10px;
+    }
+
+    .msg_head {
+        position: relative;
+    }
+
+    #action_menu_btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: white;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    .action_menu {
+        z-index: 1;
+        position: absolute;
+        padding: 15px 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border-radius: 15px;
+        top: 30px;
+        right: 15px;
+        display: none;
+    }
+
+    .action_menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .action_menu ul li {
+        width: 100%;
+        padding: 10px 15px;
+        margin-bottom: 5px;
+</style>
+</head>
+
+<body>
+<div class="container-fluid mt-5">
+    <div class="row justify-content-center h-100">
+
+        <div class="col-md-4 col-xl-3 chat">
+            <div class="card mb-sm-3 mb-md-0 contacts_card">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search..." name="" class="form-control search">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                        </div>
                     </div>
                 </div>
-                <div class="inbox_chat">
-                    <div class="chat_list active_chat">
-                        <div class="chat_people">
-                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                       alt="sunil"></div>
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
+                <div class="card-body contacts_body">
+                    <ui class="contacts">
+                        <li class="active">
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg"
+                                         class="rounded-circle user_img">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>Maryam Naz</span>
+                                    <p>Maryam is online</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                       alt="sunil"></div>
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
+                        </li>
+                        <li>
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg"
+                                         class="rounded-circle user_img">
+                                    <span class="online_icon offline"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>Sahar Darya</span>
+                                    <p>Sahar left 7 mins ago</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                       alt="sunil"></div>
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
+                        </li>
+                        <li>
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="https://i.pinimg.com/originals/54/6e/6d/546e6d4c6ce4322e6aa3b2f8ca73ac28.jpg"
+                                         class="rounded-circle user_img">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>Yolduz Rafi</span>
+                                    <p>Yolduz is online</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                       alt="sunil"></div>
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
+                        </li>
+                        <li>
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="http://profilepicturesdp.com/wp-content/uploads/2018/07/sweet-girl-profile-pictures-9.jpg"
+                                         class="rounded-circle user_img">
+                                    <span class="online_icon offline"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>Nargis Hawa</span>
+                                    <p>Nargis left 30 mins ago</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                       alt="sunil"></div>
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
+                        </li>
+                        <li>
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="https://www.freshmorningquotes.com/wp-content/uploads/2015/11/cute-and-beautifull-girls-profile-pictures.jpg"
+                                         class="rounded-circle user_img">
+                                    <span class="online_icon offline"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>Khadija Mehr</span>
+                                    <p>Khadija left 50 mins ago</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                       alt="sunil"></div>
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chat_list">
-                        <div class="chat_people">
-                            <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                       alt="sunil"></div>
-                            <div class="chat_ib">
-                                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ui>
                 </div>
+                <div class="card-footer"></div>
             </div>
-            <div class="col-md-8">
-                <div class="msg_history">
-                    <div class="incoming_msg">
-                        <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                           alt="sunil"></div>
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>Test which is a new approach to have all
-                                    solutions</p>
-                                <span class="time_date"> 11:01 AM    |    June 9</span></div>
+        </div>
+
+        <div class="col-md-8 col-xl-6 chat">
+            <div class="card">
+                <div class="card-header msg_head">
+                    <div class="d-flex bd-highlight">
+                        <div class="img_cont">
+                            <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg"
+                                 class="rounded-circle user_img">
+                            <span class="online_icon"></span>
+                        </div>
+                        <div class="user_info">
+                            <span>Chat with Maryam Naz</span>
+                            <p>1767 Messages</p>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-body msg_card_body">
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg"
+                                 class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg_cotainer">
+                            Hi, how are you samim?
+                            <span class="msg_time">8:40 AM, Today</span>
                         </div>
                     </div>
-                    <div class="outgoing_msg">
-                        <div class="sent_msg">
-                            <p>Test which is a new approach to have all
-                                solutions</p>
-                            <span class="time_date"> 11:01 AM    |    June 9</span></div>
-                    </div>
-                    <div class="incoming_msg">
-                        <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                           alt="sunil"></div>
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>Test, which is a new approach to have</p>
-                                <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
+                    <div class="d-flex justify-content-end mb-4">
+                        <div class="msg_cotainer_send">
+                            Hi Maryam i am good tnx how about you?
+                            <span class="msg_time_send">8:55 AM, Today</span>
+                        </div>
+                        <div class="img_cont_msg">
+                            <img src="https://yt3.ggpht.com/a-/AJLlDp2tfEIfHjdh3f5ukUFjBFykKQaWGmacHNAL3g=s900-mo-c-c0xffffffff-rj-k-no"
+                                 class="rounded-circle user_img_msg">
                         </div>
                     </div>
-                    <div class="outgoing_msg">
-                        <div class="sent_msg">
-                            <p>Apollo University, Delhi, India Test</p>
-                            <span class="time_date"> 11:01 AM    |    Today</span></div>
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg"
+                                 class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg_cotainer">
+                            I am good too, thank you for your chat template
+                            <span class="msg_time">9:00 AM, Today</span>
+                        </div>
                     </div>
-                    <div class="incoming_msg">
-                        <div class="incoming_msg_img"><img src="https://ptetutorials.com/images/user-profile.png"
-                                                           alt="sunil"></div>
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>We work directly with our designers and suppliers,
-                                    and sell direct to you, which means quality, exclusive
-                                    products, at a price anyone can afford.</p>
-                                <span class="time_date"> 11:01 AM    |    Today</span></div>
+                    <div class="d-flex justify-content-end mb-4">
+                        <div class="msg_cotainer_send">
+                            You welcome Maryam
+                            <span class="msg_time_send">9:05 AM, Today</span>
+                        </div>
+                        <div class="img_cont_msg">
+                            <img src="https://yt3.ggpht.com/a-/AJLlDp2tfEIfHjdh3f5ukUFjBFykKQaWGmacHNAL3g=s900-mo-c-c0xffffffff-rj-k-no"
+                                 class="rounded-circle user_img_msg">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg"
+                                 class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg_cotainer">
+                            I am looking for your next templates
+                            <span class="msg_time">9:07 AM, Today</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-4">
+                        <div class="msg_cotainer_send">
+                            Ok, thank you have a good day
+                            <span class="msg_time_send">9:10 AM, Today</span>
+                        </div>
+                        <div class="img_cont_msg">
+                            <img src="https://yt3.ggpht.com/a-/AJLlDp2tfEIfHjdh3f5ukUFjBFykKQaWGmacHNAL3g=s900-mo-c-c0xffffffff-rj-k-no"
+                                 class="rounded-circle user_img_msg">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://devilsworkshop.org/files/2013/01/enlarged-facebook-profile-picture.jpg"
+                                 class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg_cotainer">
+                            Bye, see you
+                            <span class="msg_time">9:12 AM, Today</span>
                         </div>
                     </div>
                 </div>
-                <div class="type_msg">
-                    <div class="input_msg_write">
-                        <input type="text" class="write_msg" placeholder="Type a message"/>
-                        <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
-                                                                      aria-hidden="true"></i></button>
+                <div class="card-footer">
+                    <div class="input-group">
+
+                        <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                        <div class="input-group-append">
+                            <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    .container {
-        max-width: 1170px;
-        margin: auto;
-    }
-
-    img {
-        max-width: 100%;
-    }
-
-    .inbox_people {
-        background: #f8f8f8 none repeat scroll 0 0;
-        float: left;
-        overflow: hidden;
-        width: 40%;
-        border-right: 1px solid #c4c4c4;
-    }
-
-    .inbox_msg {
-        border: 1px solid #c4c4c4;
-        clear: both;
-        overflow: hidden;
-    }
-
-    .top_spac {
-        margin: 20px 0 0;
-    }
-
-    .recent_heading {
-        float: left;
-        width: 40%;
-    }
-
-    .srch_bar {
-        display: inline-block;
-        text-align: right;
-        width: 60%;
-        padding:
-    }
-
-    .headind_srch {
-        padding: 10px 29px 10px 20px;
-        overflow: hidden;
-        border-bottom: 1px solid #c4c4c4;
-    }
-
-    .recent_heading h4 {
-        color: #05728f;
-        font-size: 21px;
-        margin: auto;
-    }
-
-    .srch_bar input {
-        border: 1px solid #cdcdcd;
-        border-width: 0 0 1px 0;
-        width: 80%;
-        padding: 2px 0 4px 6px;
-        background: none;
-    }
-
-    .srch_bar .input-group-addon button {
-        background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-        border: medium none;
-        padding: 0;
-        color: #707070;
-        font-size: 18px;
-    }
-
-    .srch_bar .input-group-addon {
-        margin: 0 0 0 -27px;
-    }
-
-    .chat_ib h5 {
-        font-size: 15px;
-        color: #464646;
-        margin: 0 0 8px 0;
-    }
-
-    .chat_ib h5 span {
-        font-size: 13px;
-        float: right;
-    }
-
-    .chat_ib p {
-        font-size: 14px;
-        color: #989898;
-        margin: auto
-    }
-
-    .chat_img {
-        float: left;
-        width: 11%;
-    }
-
-    .chat_ib {
-        float: left;
-        padding: 0 0 0 15px;
-        width: 88%;
-    }
-
-    .chat_people {
-        overflow: hidden;
-        clear: both;
-    }
-
-    .chat_list {
-        border-bottom: 1px solid #c4c4c4;
-        margin: 0;
-        padding: 18px 16px 10px;
-    }
-
-    .inbox_chat {
-        height: 550px;
-        overflow-y: scroll;
-    }
-
-    .active_chat {
-        background: #ebebeb;
-    }
-
-    .incoming_msg_img {
-        display: inline-block;
-        width: 6%;
-    }
-
-    .received_msg {
-        display: inline-block;
-        padding: 0 0 0 10px;
-        vertical-align: top;
-        width: 92%;
-    }
-
-    .received_withd_msg p {
-        background: #ebebeb none repeat scroll 0 0;
-        border-radius: 3px;
-        color: #646464;
-        font-size: 14px;
-        margin: 0;
-        padding: 5px 10px 5px 12px;
-        width: 100%;
-    }
-
-    .time_date {
-        color: #747474;
-        display: block;
-        font-size: 12px;
-        margin: 8px 0 0;
-    }
-
-    .received_withd_msg {
-        width: 57%;
-    }
-
-    .mesgs {
-        float: left;
-        padding: 30px 15px 0 25px;
-        width: 60%;
-    }
-
-    .sent_msg p {
-        background: #05728f none repeat scroll 0 0;
-        border-radius: 3px;
-        font-size: 14px;
-        margin: 0;
-        color: #fff;
-        padding: 5px 10px 5px 12px;
-        width: 100%;
-    }
-
-    .outgoing_msg {
-        overflow: hidden;
-        margin: 26px 0 26px;
-    }
-
-    .sent_msg {
-        float: right;
-        width: 46%;
-    }
-
-    .input_msg_write input {
-        background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-        border: medium none;
-        color: #4c4c4c;
-        font-size: 15px;
-        min-height: 48px;
-        width: 100%;
-    }
-
-    .type_msg {
-        border-top: 1px solid #c4c4c4;
-        position: relative;
-    }
-
-    .msg_send_btn {
-        background: #05728f none repeat scroll 0 0;
-        border: medium none;
-        border-radius: 50%;
-        color: #fff;
-        cursor: pointer;
-        font-size: 17px;
-        height: 33px;
-        position: absolute;
-        right: 0;
-        top: 11px;
-        width: 33px;
-    }
-
-    .messaging {
-        padding: 0 0 50px 0;
-    }
-
-    .msg_history {
-        height: 516px;
-        overflow-y: auto;
-    }
-</style>
+</body>
+</html>

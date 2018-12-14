@@ -4,7 +4,7 @@
         <div class="row justify-content-center features">
             <div class="col-sm-6 col-md-5 col-lg-4 item">
                 <div class="box"><i class="fa fa-book icon" style="margin: 20px 0px 35px;"></i>
-                    <h3 class="name">View &nbsp;Courses</h3>
+                    <a href="<?php echo base_url(); ?>"><h3 class="name">View &nbsp;Courses</h3></a>
                 </div>
             </div>
             <div class="col-sm-6 col-md-5 col-lg-4 item">

@@ -1,15 +1,6 @@
 <?php
 if (is_logged_in()) {
-    if ($loggedInUserType = getLoggedInUserType()) {
-        switch ($loggedInUserType) {
-            case 1:
-                redirect(base_url() . 'home/');
-                break;
-            case 2:
-                redirect(base_url() . 'phome/');
-                break;
-        }
-    }
+    redirect(base_url() . 'home/');
 }
 ?>
 
