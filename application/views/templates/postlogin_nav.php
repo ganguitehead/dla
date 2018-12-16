@@ -1,7 +1,6 @@
 <?php $loggedInUserDetail = getLoggedInUserDetail(); ?>
-
 <nav class="navbar navbar-light navbar-expand-md navigation-clean-search shadow-sm p-3 bg-white rounded">
-    <div class="container"><a class="navbar-brand" href="#">Distance Learning App</a>
+    <div class="container"><a class="navbar-brand" href="<?php echo base_url('home'); ?>">Distance Learning App</a>
         <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
                     class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"

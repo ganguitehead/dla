@@ -34,4 +34,5 @@ class Home extends CI_Controller
         // Based on the User type - show the Student / Faculty Dashboard
 //        $this->load->view('templates/student_account/home');
     }
+
 }

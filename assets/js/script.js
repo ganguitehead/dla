@@ -29,6 +29,25 @@ $(function () {
         ajaxFocusOut(this);
     });
 
+    $(".chatUserBtn").on("click", function () {
+        var chatId = $(this).attr("data-cid");
+        var courseName = $(this).find(".courseName_chat_list_item").html();
+        getChat(chatId, courseName);
+    });
+
+    $("#chatmessage_text").on("keypress", function (e) {
+        var key = e.keyCode;
+
+        // If the user has pressed enter
+        if (key == 13) {
+            message = $(this).val();
+            course_id = $(this).attr("data-cid");
+            send_chat(message, course_id);
+
+            $("#chatmessage_text").val("").empty().blur();
+        }
+    });
+
     function ajaxFocusOut(self) {
         const id = $(self).attr("id");
         const value = $(self).val();
@@ -354,5 +373,105 @@ $(function () {
             }
         });
 
+    }
+
+    function getChat(chatId, usergroup_name) {
+        var url = window.chatUserSelectAjax;
+        var sessionUserId = parseInt(window.sessionUserId);
+
+        $.ajax({
+            url: url,
+            data: {
+                id: chatId
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result) {
+                    messages = response.value;
+
+                    /* Clear the existing messages */
+                    $(".msg_card_body").html("");
+
+                    /* Insert the messages in the Html */
+                    for (var messageIndex in messages) {
+                        var singleMessage = messages[messageIndex];
+                        messageUserId = parseInt(singleMessage.user_id);
+
+                        /* If the message is by the current user - show it to the right end */
+                        if (messageUserId == sessionUserId) {
+                            var messageProto = $("#new_message_prototype_self").html();
+                            messageProto = $.parseHTML(messageProto);
+
+                            $(messageProto).find(".msg_value").html(singleMessage.message);
+                            // $(messageProto).find(".msg_time").html(singleMessage.time);
+                            $(messageProto).find(".msg_cotainer_sender").html(singleMessage.name);
+
+                            $(".msg_card_body").append(messageProto);
+                        } else {
+                            var messageProto = $("#new_message_prototype_others").html();
+                            messageProto = $.parseHTML(messageProto);
+
+                            $(messageProto).find(".msg_value").html(singleMessage.message);
+                            // $(messageProto).find(".msg_time").html(singleMessage.time);
+                            $(messageProto).find(".msg_cotainer_sender").html(singleMessage.name);
+
+                            $(".msg_card_body").append(messageProto);
+                        }
+
+                    }
+
+                    /* Remove the default group chat */
+                    if ($("#default_show_chat").length > 0) {
+                        $("#default_show_chat").remove();
+                    }
+
+                    $("#group_show_chat").fadeIn();
+
+                    scrollChatBottom();
+                }
+            }
+        });
+
+        /* Set the name and ID in the chat messages box */
+        $("#chatmessage_text").attr("data-cid", chatId);
+        $("#user_info_selected_chat").html(usergroup_name);
+    }
+
+    function send_chat(message, course_id) {
+        var url = window.chatUserSendAjax;
+
+        $.ajax({
+            url: url,
+            global: false,
+            data: {
+                m: message,
+                course: course_id
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result) {
+
+                    var singleMessage = response.value;
+                    messageUserId = parseInt(singleMessage.user_id);
+
+                    var messageProto = $("#new_message_prototype_self").html();
+                    messageProto = $.parseHTML(messageProto);
+
+                    $(messageProto).find(".msg_value").html(singleMessage.message);
+
+                    $(".msg_card_body").append(messageProto);
+
+                    scrollChatBottom();
+                }
+            }
+        });
+    }
+
+    function scrollChatBottom() {
+        $(".msg_card_body").animate({
+            scrollTop: $('.msg_card_body')[0].scrollHeight - $('.msg_card_body')[0].clientHeight
+        }, 1000);
     }
 });

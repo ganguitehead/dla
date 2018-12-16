@@ -1,5 +1,5 @@
-.afterAjaxContentProto{
-    display:none;
+.afterAjaxContentProto {
+    display: none;
 }
 
 .highlight-blue .buttons .btn, .highlight-clean .buttons .btn {
@@ -457,7 +457,12 @@
     text-align: center;
     padding: 30px;
     background-color: #fff;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    border-radius: 6px;
+}
+
+.features-boxed .item .box a {
+    color: inherit;
 }
 
 .features-boxed .item .icon {
@@ -591,8 +596,6 @@
     margin-top: 10px;
 }
 
-
-
 .contact-clean {
     background: #f1f7fc;
     padding: 80px 0
@@ -653,7 +656,6 @@
     padding-top: 10px;
     resize: vertical
 }
-
 
 /* Add Schedule page for course */
 .schedule-clean {

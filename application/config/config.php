@@ -521,3 +521,5 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['Mailchimp_api_key'] = '78dd289fabeb025cd775cd4ea202d635-us7';

@@ -1,6 +1,6 @@
 <?php
 
-class CourseSlots extends CI_Model
+class Courseslots extends CI_Model
 {
     /* Creates a new course slot */
     public function insert_courseslots($data)
@@ -34,6 +34,27 @@ class CourseSlots extends CI_Model
         }
         return false;
     }
-}
 
+    public function getAllSlots()
+    {
+        $query = $this->db->get('course_timeslots');
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
+    public function getTimeBySlotId($id)
+    {
+        $this->db->select("time_start");
+        $query = $this->db->get_where('timeslots_available', array('id' => $id));
+
+        if ($query->num_rows() > 0) {
+            return $query->first_row()->time_start;
+        }
+        return false;
+    }
+
+}
 ?>

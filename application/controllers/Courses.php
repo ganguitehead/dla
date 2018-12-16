@@ -9,7 +9,7 @@ class Courses extends CI_Controller
         $this->load->model('student');
         $this->load->model('department');
         $this->load->model('course');
-        $this->load->model('courseslots');
+        $this->load->model('Courseslots');
         $this->load->helper('app');
         $this->load->library('session');
         $this->load->helper('url');

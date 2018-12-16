@@ -81,15 +81,14 @@ class Course extends CI_Model
 
     public function getAvailableSeats($courseId)
     {
-        $this->db->select("*");
+        $this->db->select("seats_available");
         $query = $this->db->get_where('courses', array('id' => $courseId));
 
         if ($query->num_rows() > 0) {
-            return $query->row_array();
+            return $query->first_row()->seats_available;
         }
         return false;
     }
-
 
     public function studentEnroll($data)
     {
@@ -107,8 +106,51 @@ class Course extends CI_Model
 
         $this->db->set($data);
         $this->db->insert('course_enrolled');
-        return $this->db->insert_id(); // Inserted course ID
+
+        $course_enrollment_insert = $this->db->insert_id(); // Inserted course ID
+
+        /* Update the number of seats in course table */
+        $seats_available_current = $this->getAvailableSeats($courseId);
+        $this->db->set('seats_available', intval($seats_available_current) - 1);
+        $this->db->where('id', $courseId);
+        $this->db->update('courses');
+
+        return $course_enrollment_insert;
     }
+
+    public function getAllCoursesByStudentId($studentId)
+    {
+        $this->db->select("*");
+        $query = $this->db->get_where('course_enrolled', array('student_id' => $studentId));
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
+    public function getAllCoursesByFacultyId($facultyId)
+    {
+        $this->db->select("*");
+        $query = $this->db->get_where('courses', array('faculty_user_id' => $facultyId));
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
+    public function getStudentsFromCourse($courseId)
+    {
+        $this->db->select("*");
+        $query = $this->db->get_where('course_enrolled', array('course_id' => $courseId));
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
+
 }
 
 ?>

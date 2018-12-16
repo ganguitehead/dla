@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class CoursesAjax extends CI_Controller
+class Coursesajax extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->model('course');
-        $this->load->model('courseslots');
+        $this->load->model('Courseslots');
         $this->load->model('student');
         $this->load->helper('app');
         $this->load->library('session');
@@ -171,6 +171,7 @@ class CoursesAjax extends CI_Controller
 
             /* Check for the available slots in the course */
             $courseAvailableSeats = $this->course->getAvailableSeats($request["course_student_enroll_course_id"]);
+
             /* If the number of seats is less than 1 - return with false */
             if ($courseAvailableSeats < 1) {
 
@@ -204,7 +205,7 @@ class CoursesAjax extends CI_Controller
                     } else {
                         $output = json_encode(array(
                             'result' => false,
-                            'value' => "Error in creating the course schedule. Try again!"
+                            'value' => "Error in enrolling. Try again!"
                         ));
                     }
 
