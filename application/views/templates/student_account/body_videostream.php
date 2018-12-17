@@ -10,7 +10,7 @@
 
             <?php foreach ($courses as $index => $course) {
                 $courseDetail = $this->course->getCourseById($course['course_id']);
-                $fileName     = $this->course->getCourseFileName($course['course_id']);
+                $fileName = $this->course->getCourseFileName($course['course_id']);
                 ?>
 
                 <li class="list-group-item">

@@ -17,7 +17,7 @@
 
             <div class="col-sm-7 col-md-7 col-lg-5 item">
                 <div class="box"><i class="fa fa-phone icon"></i>
-                    <a href="<?php echo base_url('videostream'); ?>"><h3 class="name">Video Streaming</h3></a>
+                    <a href="<?php echo base_url('videostream'); ?>"><h3 class="name">Audio / Video Streaming</h3></a>
                 </div>
             </div>
 
