@@ -23,8 +23,8 @@ class Videostream extends CI_Controller
             if ($loggedInUserType = getLoggedInUserType()) {
                 switch ($loggedInUserType) {
                     case 1:
-                        $courses = $this->course->getAllCoursesByStudentId($userId);
-                        $data    = array("courses" => $courses);
+                        $courses  = $this->course->getAllCoursesByStudentId($userId);
+                        $data = array("courses" => $courses);
                         $this->load->view('templates/student_account/videostream', $data);
                         break;
                     case 2:

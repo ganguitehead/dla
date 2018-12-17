@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Chat extends CI_Controller
+class Settings extends CI_Controller
 {
     public function __construct()
     {
@@ -22,36 +22,10 @@ class Chat extends CI_Controller
         }
 
         if (is_logged_in()) {
-
             $user_id = $this->session->userdata('user_id');
-
-            $courseDetailArray = array();
-
-            if ($loggedInUserType = getLoggedInUserType()) {
-                switch ($loggedInUserType) {
-                    case 1:
-                        $userCourses = $this->course->getAllCoursesByStudentId($user_id);
-
-                        if (is_array($userCourses) && count($userCourses) > 0) {
-                            foreach ($userCourses as $userCourse) {
-                                $detail = $this->course->getCourseById($userCourse["course_id"]);
-
-                                array_push($courseDetailArray, $detail);
-                            }
-                        }
-
-                        break;
-
-                    case 2:
-                        $courseDetailArray = $this->course->getAllCoursesByFacultyId($user_id);
-                        break;
-                }
-            }
+            $this->load->view('templates/common/change_password');
         }
 
-        $data = array("userCourses" => $courseDetailArray);
-
-        $this->load->view('templates/common/chat', $data);
     }
 
 

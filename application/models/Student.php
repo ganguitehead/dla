@@ -85,6 +85,19 @@ class Student extends CI_Model
         return false;
     }
 
+    public function updatePassword($userId, $password)
+    {
+        $this->db->set('password', $password);
+        $this->db->where('id', $userId);
+        $this->db->update('users');
+
+        if ($this->db->affected_rows()) {
+            return true;
+        }
+        return false;
+
+    }
+
 }
 
 ?>

@@ -44,15 +44,22 @@ class Chatajax extends CI_Controller
 
             $messages = json_decode($messages, true);
 
-            foreach ($messages as &$message) {
-                $userDetail      = $this->student->getUserDetailById($message["user_id"]);
-                $message["name"] = ucwords($userDetail["firstname"] . " " . $userDetail["lastname"]);
-            }
+            if (is_array($messages) && count($messages) > 0) {
+                foreach ($messages as &$message) {
+                    $userDetail      = $this->student->getUserDetailById($message["user_id"]);
+                    $message["name"] = ucwords($userDetail["firstname"] . " " . $userDetail["lastname"]);
+                }
 
-            $output = json_encode(array(
-                'result' => true,
-                'value' => $messages
-            ));
+                $output = json_encode(array(
+                    'result' => true,
+                    'value' => $messages
+                ));
+            } else {
+                $output = json_encode(array(
+                    'result' => true,
+                    'value' => array()
+                ));
+            }
         }
 
         return $this->output

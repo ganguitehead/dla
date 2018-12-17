@@ -7,7 +7,7 @@ class Coursesajax extends CI_Controller
     {
         parent::__construct();
         $this->load->model('course');
-        $this->load->model('Courseslots');
+        $this->load->model('courseslots');
         $this->load->model('student');
         $this->load->helper('app');
         $this->load->library('session');
@@ -217,5 +217,49 @@ class Coursesajax extends CI_Controller
             ->set_content_type('application/json')
             ->set_status_header(200)
             ->set_output($output);
+    }
+
+    public function course_doc_upload()
+    {
+        $request = $this->input->post();
+
+        if (!array_key_exists('course_id', $request)) {
+
+            $output = json_encode(array(
+                'result' => false,
+                'value' => "Unable to upload the file. Refresh the page and try again"
+            ));
+
+        } else {
+            $courseId = $request["course_id"];
+            $file     = $_FILES["fileData"];
+
+            $target_dir  = FCPATH . '/assets/course_files/';
+            $extension   = pathinfo($_FILES["fileData"]["name"], PATHINFO_EXTENSION);
+            $fileName    = "coursefile_" . $courseId . "." . $extension;
+            $target_file = $target_dir . $fileName;
+
+            if (move_uploaded_file($_FILES["fileData"]["tmp_name"], $target_file)) {
+
+                $this->course->updateCourseFileName($fileName, $courseId);
+
+                $output = json_encode(array(
+                    'result' => true,
+                    'value' => "The file " . basename($_FILES["fileData"]["name"]) . " has been uploaded."
+                ));
+
+            } else {
+                $output = json_encode(array(
+                    'result' => false,
+                    'value' => "Error in uploading the file. Try again!"
+                ));
+            }
+        }
+
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output($output);
+
     }
 }

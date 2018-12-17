@@ -10,5 +10,5 @@
 
         <div class="alert mt-2" style="display:none;" id="student_login_form_alert" role="alert"></div>
 
-        <a href="#" class="forgot">Forgot your email or password?</a></form>
+        <a href="<?php echo base_url('forgotpwd'); ?>" class="forgot">Forgot your email or password?</a></form>
 </div>

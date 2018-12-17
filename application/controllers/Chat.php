@@ -32,10 +32,12 @@ class Chat extends CI_Controller
                     case 1:
                         $userCourses = $this->course->getAllCoursesByStudentId($user_id);
 
-                        foreach ($userCourses as $userCourse) {
-                            $detail = $this->course->getCourseById($userCourse["course_id"]);
+                        if (is_array($userCourses) && count($userCourses) > 0) {
+                            foreach ($userCourses as $userCourse) {
+                                $detail = $this->course->getCourseById($userCourse["course_id"]);
 
-                            array_push($courseDetailArray, $detail);
+                                array_push($courseDetailArray, $detail);
+                            }
                         }
 
                         break;

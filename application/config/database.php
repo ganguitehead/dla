@@ -75,9 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
+//	'hostname' => 'localhost',
+	'hostname' => 'ec2-18-220-196-23.us-east-2.compute.amazonaws.com',
+//	'username' => 'root',
+	'username' => 'dlauser_remote',
+//	'password' => '',
+	'password' => 'pass123',
 	'database' => 'dla',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

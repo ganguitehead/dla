@@ -187,5 +187,110 @@ class Callsajax extends CI_Controller
             ->set_output($output);
     }
 
+    /* Before login*/
+    public function forgot_password()
+    {
+        $request = $this->input->post();
+        $output  = array();
+
+        $missingVars = array();
+
+        foreach ($request as $key => $data) {
+            if (strlen($data) < 1) {
+                array_push($missingVars, $key);
+            }
+        }
+
+        if (count($missingVars) > 0) {
+
+            $output = json_encode(array(
+                'result' => false,
+                'value' => "Fill all the fields and submit."
+            ));
+
+        } else {
+
+            /* Check if the email is valid */
+            if ($user_id = $this->student->getIdByEmail(data_clean($request["forgot_password_email"]))) {
+
+                $userNewPassword = data_clean($request["forgot_password_value"]);
+
+                /* Take the password and update the user's password */
+                $changePassword = $this->student->updatePassword($user_id, $userNewPassword);
+
+                if ($changePassword) {
+                    $output = json_encode(array(
+                        'result' => true,
+                        'value' => "Password has been changed."
+                    ));
+                } else {
+                    $output = json_encode(array(
+                        'result' => false,
+                        'value' => "There was an error updating your password. Try again."
+                    ));
+                }
+
+            } else {
+                $output = json_encode(array(
+                    'result' => false,
+                    'value' => "Account with the entered email not found."
+                ));
+            }
+        }
+
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output($output);
+    }
+
+    /* After login*/
+    public function update_password()
+    {
+        $request = $this->input->post();
+        $output  = array();
+
+        $missingVars = array();
+
+        foreach ($request as $key => $data) {
+            if (strlen($data) < 1) {
+                array_push($missingVars, $key);
+            }
+        }
+
+        if (count($missingVars) > 0) {
+
+            $output = json_encode(array(
+                'result' => false,
+                'value' => "Fill all the fields and submit."
+            ));
+
+        } else {
+            $user_id         = $this->session->userdata('user_id');
+            $userNewPassword = data_clean($request["change_password_value"]);
+
+            /* Take the password and update the user's password */
+            $changePassword = $this->student->updatePassword($user_id, $userNewPassword);
+
+            if ($changePassword) {
+                $output = json_encode(array(
+                    'result' => true,
+                    'value' => "Your Password has been updated."
+                ));
+            } else {
+                $output = json_encode(array(
+                    'result' => false,
+                    'value' => "There was an error updating your password. Try again."
+                ));
+            }
+
+        }
+
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output($output);
+    }
+
 
 }

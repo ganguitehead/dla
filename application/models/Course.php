@@ -151,6 +151,30 @@ class Course extends CI_Model
         return false;
     }
 
+    public function updateCourseFileName($name, $courseId)
+    {
+        $this->db->set('file_name', $name);
+        $this->db->where('id', $courseId);
+        $this->db->update('courses');
+
+        if ($this->db->affected_rows()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getCourseFileName($courseId)
+    {
+        $this->db->select("file_name");
+        $query = $this->db->get_where('courses', array('id' => $courseId));
+
+        if ($query->num_rows() > 0) {
+            return $query->first_row()->file_name;
+        }
+        return false;
+    }
+
+
 }
 
 ?>

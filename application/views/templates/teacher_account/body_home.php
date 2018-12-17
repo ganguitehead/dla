@@ -23,7 +23,7 @@
 
             <div class="col-sm-7 col-md-7 col-lg-5 item">
                 <div class="box"><i class="fas fa-cogs icon"></i>
-                    <h3 class="name">Settings</h3>
+                    <a href="<?php echo base_url('settings'); ?>"><h3 class="name">Settings</h3></a>
                 </div>
             </div>
         </div>
