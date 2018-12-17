@@ -86,6 +86,14 @@ $(function () {
             case 'course_student_enroll_finish':
                 course_student_enroll();
                 break;
+
+            case 'forgot_password_submit':
+                forgot_password();
+                break;
+
+            case 'change_password_submit':
+                update_password();
+                break;
         }
     }
 
@@ -460,6 +468,7 @@ $(function () {
                     messageProto = $.parseHTML(messageProto);
 
                     $(messageProto).find(".msg_value").html(singleMessage.message);
+                    $(messageProto).find(".msg_cotainer_sender").html(singleMessage.name);
 
                     $(".msg_card_body").append(messageProto);
 
@@ -474,4 +483,121 @@ $(function () {
             scrollTop: $('.msg_card_body')[0].scrollHeight - $('.msg_card_body')[0].clientHeight
         }, 1000);
     }
+
+    function forgot_password() {
+        $("#forgot_password_form_alert").fadeOut();
+        var data = $(".forgot_password_form").serialize();
+        var url = window.forgotpassswordajax;
+        var alert_id = "#forgot_password_form_alert";
+        $(alert_id).fadeOut();
+
+        var passwordMatch = checkPasswordMatch(".forgot_password_form");
+
+        if (!passwordMatch) {
+            $(alert_id).html("Passwords do not match.");
+            $(alert_id).removeClass("alert-success").addClass("alert-warning");
+            $(alert_id).fadeIn();
+            return;
+        }
+
+        $.ajax({
+            url: url,
+            data: data,
+            type: 'POST',
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            success: function (response) {
+                if (response && response.result) {
+                    $(alert_id).html(response.value);
+                    $(alert_id).removeClass("alert-warning").addClass("alert-success");
+
+                    /* Reset the form */
+                    $(".forgot_password_form").trigger("reset");
+                } else {
+                    $(alert_id).html(response.value);
+                    $(alert_id).removeClass("alert-success").addClass("alert-warning");
+                }
+                $(alert_id).fadeIn();
+            }
+        });
+    }
+
+    function update_password() {
+        $("#change_password_form_alert").fadeOut();
+        var data = $(".change_password_form").serialize();
+        var url = window.changepassswordajax;
+        var alert_id = "#change_password_form_alert";
+        $(alert_id).fadeOut();
+
+        var passwordMatch = checkPasswordMatch(".change_password_form");
+
+        if (!passwordMatch) {
+            $(alert_id).html("Passwords do not match.");
+            $(alert_id).removeClass("alert-success").addClass("alert-warning");
+            $(alert_id).fadeIn();
+            return;
+        }
+
+        $.ajax({
+            url: url,
+            data: data,
+            type: 'POST',
+            cache: false,
+            processData: false,
+            dataType: 'json',
+            success: function (response) {
+                if (response && response.result) {
+                    $(alert_id).html(response.value);
+                    $(alert_id).removeClass("alert-warning").addClass("alert-success");
+
+                    /* Reset the form */
+                    $(".change_password_form").trigger("reset");
+                } else {
+                    $(alert_id).html(response.value);
+                    $(alert_id).removeClass("alert-success").addClass("alert-warning");
+                }
+                $(alert_id).fadeIn();
+            }
+        });
+    }
+
+    /* File upload code */
+    $(".ajaxFileUpload").change(function () {
+        var url = window.classDocUpload;
+        var formData = new FormData();
+        var file = this.files[0];
+        var course_id = $(this).attr("data-cid");
+
+        var self = this;
+
+        var alert_id = "#form_alert_" + course_id;
+
+        formData.append('fileData', file);
+        formData.append('course_id', course_id);
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                if (response && response.result) {
+                    $(alert_id).html(response.value);
+                    $(alert_id).removeClass("alert-warning").addClass("alert-success");
+
+                    /* Cleae the file input */
+                    $(self).val('');
+                } else {
+                    $(alert_id).html(response.value);
+                    $(alert_id).removeClass("alert-success").addClass("alert-warning");
+                }
+                $(alert_id).fadeIn();
+            }
+        });
+
+    });
+
 });
